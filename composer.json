@@ -1,0 +1,22 @@
+{
+    "name": "silvioiannone/laravel-deploy",
+    "description": "A package that allows quick deploys from the CLI",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Silvio Iannone",
+            "email": "silvio@bloom.se"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SilvioIannone\\LaravelDeploy\\": "src"
+        }
+    },
+    "require": {
+        "php": "^7.4",
+        "guzzlehttp/guzzle": "^7.0",
+        "illuminate/support": "^v8.8"
+    }
+}
