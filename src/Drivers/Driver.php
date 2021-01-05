@@ -2,8 +2,8 @@
 
 namespace SilvioIannone\LaravelDeploy\Drivers;
 
-use Bloom\Cluster\Kernel\Framework\Support\Arr;
 use Illuminate\Support\Str;
+use SilvioIannone\LaravelDeploy\Utils\Arr;
 
 /**
  * A Laravel-deploy driver.
@@ -14,7 +14,7 @@ abstract class Driver
      * Driver configuration.
      */
     protected array $config = [];
-    
+
     /**
      * Constructor.
      */
@@ -22,7 +22,7 @@ abstract class Driver
     {
         $this->initConfig($config);
     }
-    
+
     /**
      * Get the driver name.
      */
@@ -30,21 +30,20 @@ abstract class Driver
     {
         return (new \ReflectionClass(static::class))->getShortName();
     }
-    
+
     /**
      * Initialize the driver configuration.
      */
     protected function initConfig(array $config): void
     {
         $configKey = 'deploy.drivers.' . Str::lower(Str::snake(static::name()));
-    
-        // Clean up the configurations by removing the null values.
-        $cleanUp = static fn (array $config)
-            => array_filter($config, static fn ($value): bool => $value !== null);
-        
-        $this->config = array_merge($cleanUp(config($configKey)), $cleanUp($config));
+
+        $this->config = array_merge(
+            Arr::clean(config($configKey)),
+            Arr::clean($config)
+        );
     }
-    
+
     /**
      * Get a configuration option.
      *
@@ -54,7 +53,7 @@ abstract class Driver
     {
         return Arr::get($this->config, $key);
     }
-    
+
     /**
      * Run the deployment.
      */
@@ -62,7 +61,7 @@ abstract class Driver
     {
         $this->trigger();
     }
-    
+
     /**
      * Trigger the deployment.
      */

@@ -4,31 +4,51 @@
  * Laravel-deploy configuration file.
  */
 return [
-    
+
     /**
-     * The default driver that will be executed when running `artisan deploy`.
-     */
-    'default_driver' => \SilvioIannone\LaravelDeploy\Drivers\Envoyer::class,
-    
-    /**
-     * Driver specific configuration.
+     * Global driver specific configuration.
      */
     'drivers' => [
-    
+
         /**
          * Envoyer driver configuration.
          */
         'envoyer' => [
-    
+
             /**
              * Laravel envoyer token.
+             *
+             * Required!
              */
-            'token' => env('LARAVEL_DEPLOY_ENVOYER_TOKEN'),
-    
+            'token' => '',
+
             /**
              * The branch that will be used to run the deployment.
              */
-            'branch' => env('LARAVEL_DEPLOY_ENVOYER_BRANCH', 'master')
+            'branch' => 'master'
+        ]
+    ],
+
+    /**
+     * Deployment targets configurations.
+     */
+    'targets' => [
+
+        /**
+         * Define the different targets that will receive a deployment.
+         *
+         * Here's an example:
+         */
+        'staging' => [
+            'driver' => \SilvioIannone\LaravelDeploy\Drivers\Envoyer::class,
+            'config' => [
+                /**
+                 * Driver specific configuration. The options set will override the defaults set in
+                 * the `drivers` section of this configuration file.
+                 */
+                'token' => '', // Retrieve this from and environment file.
+                'branch' => 'next' // Override the default `master` branch.
+            ]
         ]
     ]
 ];
