@@ -3,12 +3,13 @@
 namespace SilvioIannone\LaravelDeploy\Drivers;
 
 use Illuminate\Support\Str;
+use SilvioIannone\LaravelDeploy\Interfaces\Driver as DriverInterface;
 use SilvioIannone\LaravelDeploy\Utils\Arr;
 
 /**
- * A Laravel-deploy driver.
+ * Abstract driver.
  */
-abstract class Driver
+abstract class Driver implements DriverInterface
 {
     /**
      * Driver configuration.

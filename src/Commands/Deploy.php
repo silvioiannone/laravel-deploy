@@ -4,6 +4,7 @@ namespace SilvioIannone\LaravelDeploy\Commands;
 
 use Illuminate\Console\Command;
 use SilvioIannone\LaravelDeploy\Drivers\Driver;
+use SilvioIannone\LaravelDeploy\Interfaces\ConsoleOutput;
 use SilvioIannone\LaravelDeploy\Utils\Arr;
 
 /**
@@ -54,6 +55,12 @@ class Deploy extends Command
 
         $driverClass = $target['driver'];
 
-        return new $driverClass(array_merge($target['config'], Arr::clean($this->options())));
+        $instance = new $driverClass(array_merge($target['config'], Arr::clean($this->options())));
+        
+        if (\App::runningInConsole() && $instance instanceof ConsoleOutput) {
+            $instance->setOutput($this->output);
+        }
+        
+        return $instance;
     }
 }

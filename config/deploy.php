@@ -6,9 +6,30 @@
 return [
 
     /**
-     * Global driver specific configuration.
+     * The default driver that will be executed when running `artisan deploy`.
+     */
+    'default_driver' => \SilvioIannone\LaravelDeploy\Drivers\SimpleEnvoyer::class,
+
+    /**
+     * Driver specific configuration.
      */
     'drivers' => [
+
+        /**
+         * Simple Envoyer driver configuration.
+         */
+        'simple_envoyer' => [
+
+            /**
+             * Laravel envoyer token.
+             */
+            'token' => env('LARAVEL_DEPLOY_ENVOYER_TOKEN'),
+
+            /**
+             * The branch that will be used to run the deployment.
+             */
+            'branch' => env('LARAVEL_DEPLOY_ENVOYER_BRANCH', 'master')
+        ],
 
         /**
          * Envoyer driver configuration.
@@ -16,16 +37,14 @@ return [
         'envoyer' => [
 
             /**
-             * Laravel envoyer token.
-             *
-             * Required!
+             * Laravel Envoyer API token.
              */
-            'token' => '',
+            'token' => env('LARAVEL_ENVOYER_API_TOKEN'),
 
             /**
-             * The branch that will be used to run the deployment.
+             * Laravel Envoyer project name.
              */
-            'branch' => 'master'
+            'name' => env('APP_NAME', env('LARAVEL_ENVOYER_PROJECT_NAME'))
         ]
     ],
 
@@ -33,22 +52,23 @@ return [
      * Deployment targets configurations.
      */
     'targets' => [
-
-        /**
-         * Define the different targets that will receive a deployment.
-         *
-         * Here's an example:
-         */
-        'staging' => [
-            'driver' => \SilvioIannone\LaravelDeploy\Drivers\Envoyer::class,
-            'config' => [
-                /**
-                 * Driver specific configuration. The options set will override the defaults set in
-                 * the `drivers` section of this configuration file.
-                 */
-                'token' => '', // Retrieve this from and environment file.
-                'branch' => 'next' // Override the default `master` branch.
-            ]
-        ]
+        // In here You can define the different deployment targets.
+        //
+        // Example:
+        //
+        // 'production' target.
+        // 'production' => [
+        //
+        //     Driver used by the production target.
+        //     'driver' => \SilvioIannone\LaravelDeploy\Drivers\Envoyer::class,
+        //
+        //     Driver configuration. This confiration will override the default value specified in
+        //     `deploy.drivers` section just above.
+        //     'config' => [
+        //         'token' => env('LARAVEL_DEPLOY_ENVOYER_PRODUCTION_TOKEN'),
+        //         'name' => 'BloomEstate - Updated',
+        //         'branch' => env('LARAVEL_DEPLOY_ENVOYER_PRODUCTION_BRANCH', 'master'),
+        //     ]
+        // ]
     ]
 ];
