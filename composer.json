@@ -17,6 +17,7 @@
     "require": {
         "php": "^7.4",
         "guzzlehttp/guzzle": "^7.0",
-        "illuminate/support": "^v8.8"
+        "illuminate/support": "^v8.8",
+        "silvioiannone/envoyer-php": "^0.1.0"
     }
 }
