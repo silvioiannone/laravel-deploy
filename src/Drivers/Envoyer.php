@@ -28,6 +28,9 @@ class Envoyer extends Driver implements ConsoleOutputInterface
 
         $envoyer->projects()->deploy($project->get('id'));
 
+        // Wait a few seconds for the deployment to be started.
+        sleep(3);
+
         $deployment = $envoyer->projects()
             ->deployments($project->get('id'))->first();
         $deployment = $envoyer->projects()
