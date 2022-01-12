@@ -26,6 +26,10 @@ class Envoyer extends Driver implements ConsoleOutputInterface
             ->where('name', $this->getConfig('name'))
             ->first();
 
+        if (! $project) {
+            throw new \RuntimeException("Impossible to find the {$this->getConfig('name')} project.");
+        }
+
         $envoyer->projects()->deploy($project->get('id'));
 
         // Wait a few seconds for the deployment to be started.
